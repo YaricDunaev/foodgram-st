@@ -1,0 +1,124 @@
+[
+    {
+      "model": "base.ingredient",
+      "pk": 1,
+      "fields": {
+        "name": "Паста",
+        "measurement_unit": "г"
+      }
+    },
+    {
+      "model": "base.ingredient",
+      "pk": 2,
+      "fields": {
+        "name": "Сметана",
+        "measurement_unit": "мл"
+      }
+    },
+    {
+      "model": "base.ingredient",
+      "pk": 3,
+      "fields": {
+        "name": "Сыр",
+        "measurement_unit": "г"
+      }
+    },
+    {
+      "model": "base.siteuser",
+      "pk": 2,
+      "fields": {
+        "username": "user1",
+        "email": "user1@example.com",
+        "first_name": "Иван",
+        "last_name": "Иванов",
+        "password": "password123"
+      }
+    },
+    {
+      "model": "base.siteuser",
+      "pk": 3,
+      "fields": {
+        "username": "user2",
+        "email": "user2@example.com",
+        "first_name": "Петр",
+        "last_name": "Петров",
+        "password": "password123"
+      }
+    },
+    {
+      "model": "base.recipe",
+      "pk": 1,
+      "fields": {
+        "author": 2,
+        "name": "Паста Карбонара",
+        "image": "recipes/images/pasta_carbonara.jpg",
+        "text": "Классический итальянский рецепт пасты с сыром, яйцами и беконом.",
+        "cooking_time": 30,
+        "date_published": "2025-01-01T00:00:00Z"
+      }
+    },
+    {
+      "model": "base.recipe",
+      "pk": 2,
+      "fields": {
+        "author": 3,
+        "name": "Куриный суп",
+        "image": "recipes/images/chicken_soup.jpg",
+        "text": "Питательный суп с курицей и овощами.",
+        "cooking_time": 45,
+        "date_published": "2025-01-01T01:00:00Z"
+      }
+    },
+    {
+      "model": "base.recipeingredient",
+      "pk": 1,
+      "fields": {
+        "recipe": 1,
+        "ingredient": 1,
+        "amount": 200
+      }
+    },
+    {
+      "model": "base.recipeingredient",
+      "pk": 2,
+      "fields": {
+        "recipe": 1,
+        "ingredient": 2,
+        "amount": 100
+      }
+    },
+    {
+      "model": "base.recipeingredient",
+      "pk": 3,
+      "fields": {
+        "recipe": 1,
+        "ingredient": 3,
+        "amount": 50
+      }
+    },
+    {
+      "model": "base.favorite",
+      "pk": 1,
+      "fields": {
+        "user": 2,
+        "recipe": 1
+      }
+    },
+    {
+      "model": "base.shoppingcart",
+      "pk": 1,
+      "fields": {
+        "user": 3,
+        "recipe": 2
+      }
+    },
+    {
+      "model": "base.subscription",
+      "pk": 1,
+      "fields": {
+        "user": 2,
+        "author": 3
+      }
+    }
+  ]
+  
