@@ -1,16 +1,18 @@
 from pathlib import Path
 import os
 import sys
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения из файла .env
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-SECRET_KEY = 'django-insecure-x2c)ff+tffyey1hx^^&8^vxc1cj%r^!t3!k7++d1r)=sh@aq3g'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-
-DEBUG = True
-
-ALLOWED_HOSTS = ["localhost", "127.0.0.1",]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
@@ -49,7 +51,6 @@ INSTALLED_APPS = [
     'core',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,31 +84,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'foodgram'),
-        'USER': os.getenv('POSTGRES_USER', 'foodgram_user'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'foodgram_password'),
-        'HOST': os.getenv('DB_HOST', 'db'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+if os.getenv('USE_SQLITE', 'False').lower() == 'true':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB', 'foodgram'),
+            'USER': os.getenv('POSTGRES_USER', 'foodgram_user'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'foodgram_password'),
+            'HOST': os.getenv('DB_HOST', 'db'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+        }
     }
-}
-
-if 'test' in sys.argv and DEBUG:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase'
-    }
-
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -128,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'core.CustomUser'
+AUTH_USER_MODEL = 'core.SiteUser'
 
 LANGUAGE_CODE = 'ru'
 
@@ -150,13 +144,10 @@ REST_FRAMEWORK = {
     ),
 }
 
-
-
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'user': 'api.serializers.UserSerializer',
 }
-
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
