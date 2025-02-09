@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import short_link
 
+from .views import short_link
 
 urlpatterns = [
     path(

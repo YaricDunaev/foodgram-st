@@ -1,13 +1,11 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.utils.html import mark_safe
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
-from .models import (
-    Ingredient, Recipe, RecipeIngredient,
-    Favorite, ShopCart, Subscription
-)
-from django.contrib.auth import get_user_model
 
+from .models import (Favorite, Ingredient, Recipe, RecipeIngredient, ShopCart,
+                     Subscription)
 
 User = get_user_model()
 
@@ -44,7 +42,7 @@ class UserAdmin(admin.ModelAdmin):
 
     @admin.display(description="Подписчиков")
     def subscriber_count(self, obj):
-        return obj.author.count()
+        return obj.authors.count()
 
 
 class IngredientResource(ModelResource):
@@ -83,7 +81,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
     @admin.display(description='В избранном')
     def favorites_count(self, obj):
-        return Favorite.objects.filter(recipe=obj).count()
+        return obj.favorites.count()
 
     @admin.display(description='Ингредиенты')
     @mark_safe

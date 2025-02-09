@@ -1,9 +1,11 @@
 import csv
 import os
+import traceback
+
 from django.conf import settings
 from django.core.management.base import BaseCommand
+
 from core.models import Ingredient
-import traceback
 
 
 class Command(BaseCommand):
